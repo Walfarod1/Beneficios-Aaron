@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa Integral de Bienestar y Beneficios - POZUELO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #c91721;
+            --secondary-yellow: #f5e900;
+            --white: #ffffff;
+            --black: #000000;
+            --gray: #333333;
+            --light-gray: #f8f8f8;
+            --dark-red: #8a1117;
+            --green: #2c5530;
+            --dark-green: #1a331d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-gray) 0%, #e0e0e0 100%);
+            min-height: 100vh;
+            color: var(--gray);
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 100;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 50%, var(--secondary-yellow) 100%);
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 40%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            color: var(--white);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-red);
+        }
+
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .dimension-card {
+            background: white;
+            border: 2px solid var(--primary-red);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dimension-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(201, 23, 33, 0.2);
+        }
+
+        .dimension-card.active {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            color: white;
+            border: none;
+        }
+
+        .dimension-card.active:hover {
+            transform: scale(1.05);
+        }
+
+        .dimension-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .dimension-card h3 {
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        .benefits-container {
+            background: linear-gradient(135deg, white 0%, #fafafa 100%);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(201, 23, 33, 0.15);
+        }
+
+        .benefits-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .benefits-header i {
+            font-size: 2.25rem;
+            margin-right: 1rem;
+        }
+
+        .benefits-header h2 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-item {
+            background: white;
+            border: 2px solid var(--primary-red);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            box-shadow: 0 8px 25px rgba(201, 23, 33, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .benefit-item h4 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-red);
+        }
+
+        .benefit-item p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: var(--gray);
+        }
+
+        .benefit-details h5,
+        .benefit-requirements h5 {
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: var(--primary-red);
+        }
+
+        .benefit-details ul,
+        .benefit-requirements ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        .benefit-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-red);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-yellow);
+            color: var(--black);
+        }
+
+        .btn-secondary:hover {
+            background: #e6d500;
+        }
+
+        .btn-gray {
+            background: var(--gray);
+            color: white;
+        }
+
+        .btn-gray:hover {
+            background: #222;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(201, 23, 33, 0.3);
+            color: white;
+        }
+
+        .contact-section h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        .contact-item i {
+            color: var(--secondary-yellow);
+            font-size: 1.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray);
+            font-size: 1.125rem;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                height: 45px;
+            }
+            
+            .header {
+                margin-top: 60px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+            
+            .benefits-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .benefits-header i {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/Logo%20Pozuelo.png" alt="Logo POZUELO" class="logo">
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Programa Integral de Bienestar y Beneficios</h1>
+            <p>Un programa diseñado para cuidar de nuestros colaboradores en todas las dimensiones</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Dimension Navigation -->
+        <h2 class="section-title">Dimensiones del Bienestar</h2>
+        <div class="dimensions-grid" id="dimensionsGrid">
+            <div class="dimension-card active" data-dimension="fisica">
+                <i class="fas fa-heartbeat dimension-icon"></i>
+                <h3>Dimensión Física</h3>
+            </div>
+            <div class="dimension-card" data-dimension="social">
+                <i class="fas fa-users dimension-icon"></i>
+                <h3>Dimensión Social</h3>
+            </div>
+            <div class="dimension-card" data-dimension="financiera">
+                <i class="fas fa-dollar-sign dimension-icon"></i>
+                <h3>Dimensión Financiera</h3>
+            </div>
+            <div class="dimension-card" data-dimension="emocional">
+                <i class="fas fa-heart dimension-icon"></i>
+                <h3>Dimensión Emocional</h3>
+            </div>
+            <div class="dimension-card" data-dimension="mental">
+                <i class="fas fa-brain dimension-icon"></i>
+                <h3>Dimensión Mental</h3>
+            </div>
+        </div>
+
+        <!-- Benefits Content -->
+        <div class="benefits-container" id="benefitsContainer">
+            <div class="benefits-header" id="benefitsHeader">
+                <i class="fas fa-heartbeat" id="headerIcon"></i>
+                <h2 id="headerTitle">Dimensión Física</h2>
+            </div>
+            <div class="benefits-grid" id="benefitsGrid">
+                <!-- Benefits will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-section">
+            <h3>¿Necesitas más información?</h3>
+            <p>Nuestro equipo de Recursos Humanos está disponible para ayudarte con cualquier consulta sobre estos beneficios.</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+506 2222-3333</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>beneficios@pozuelo.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-building"></i>
+                    <span>Unidad de Salud - Edificio Principal</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 POZUELO - Todos los derechos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        // Data structure for dimensions and benefits
+        const dimensionsData = {
+            fisica: {
+                icon: 'fa-heartbeat',
+                title: 'Dimensión Física',
+                color: '#c91721',
+                items: [
+                    {
+                        title: 'Médico de Empresa',
+                        description: 'Atención médica directa en el lugar de trabajo para garantizar salud y bienestar.'
+                    },
+                    {
+                        title: 'Enfermería',
+                        description: 'Servicio disponible para emergencias menores y primeros auxilios.'
+                    },
+                    {
+                        title: 'Terapia Física',
+                        description: 'Tratamientos especializados para recuperación de lesiones y bienestar físico.'
+                    },
+                    {
+                        title: 'Psicología',
+                        description: 'Apoyo emocional para manejar el estrés y situaciones que afectan el desempeño.'
+                    },
+                    {
+                        title: 'Nutrición',
+                        description: 'Servicio de nutrición para promover hábitos alimenticios saludables.'
+                    },
+                    {
+                        title: 'Servicio de Emergencias',
+                        description: 'Atención médica inmediata para situaciones críticas, garantizando seguridad.'
+                    },
+                    {
+                        title: 'Dermatología',
+                        description: 'Diagnóstico y tratamiento para enfermedades de la piel.'
+                    },
+                    {
+                        title: 'Hemograma Anual Gratuito',
+                        description: 'Conoce tu estado de salud para adoptar nuevos hábitos de bienestar.'
+                    },
+                    {
+                        title: 'Centro de Acondicionamiento Físico Vivo con Sentido (CAVS)',
+                        description: 'Gimnasio gratuito con acceso sin restricciones para fomentar un estilo de vida activo.',
+                        details: [
+                            'Solicita una cita en la Unidad de Salud para iniciar el uso del gimnasio',
+                            'Te harán un chequeo general para conocer tu estado de salud',
+                            'Es obligatorio realizarse el chequeo médico antes de usar el gimnasio',
+                            'Presentate en el gimnasio y solicita ayuda de un instructor para mediciones y rutina'
+                        ]
+                    },
+                    {
+                        title: 'Cobertura Integral de Póliza de Vida',
+                        description: 'Protección financiera con cobertura equivalente a 12 salarios base en caso de fallecimiento.'
+                    }
+                ]
+            },
+            social: {
+                icon: 'fa-users',
+                title: 'Dimensión Social',
+                color: '#f5e900',
+                items: [
+                    {
+                        title: 'Día de la Familia',
+                        description: 'Celebración que reúne a colaboradores y sus familias, fortaleciendo lazos comunitarios.'
+                    },
+                    {
+                        title: 'Fiesta de Colaboradores',
+                        description: 'Evento anual que celebra el trabajo en equipo y reconoce logros del año.'
+                    },
+                    {
+                        title: 'Tesoros ¡Muuucha Galleta!',
+                        description: 'Espacio para celebrar y agradecer a colaboradores jubilados por su trayectoria.'
+                    },
+                    {
+                        title: 'Bienvenida de la Navidad',
+                        description: 'Celebración del inicio de la temporada navideña con espíritu navideño.'
+                    },
+                    {
+                        title: 'Regalía de Producto',
+                        description: '1 Kg de galletas por semana para todos los colaboradores.',
+                        details: [
+                            'Lunes: 5:30am-6:30am / 9:00am-10:30am / 1:30pm-3:30pm',
+                            'Miércoles: 5:30am-6:30am / 9:00am-10:30am / 1:30pm-3:30pm',
+                            'Jueves: 5:30am-6:30am / 9:00am-10:30am / 1:30pm-3:30pm'
+                        ]
+                    },
+                    {
+                        title: 'Opciones de Regalos por Cumpleaños',
+                        description: 'Elige entre una bolsa de productos variados o dos entradas al cine.'
+                    },
+                    {
+                        title: 'Beneficio por Matrimonio',
+                        description: '3 días de permiso con goce de salario y depósito en nómina para luna de miel.',
+                        action: 'Solicitar beneficio por matrimonio',
+                        fileUpload: true
+                    },
+                    {
+                        title: 'Descuentos Especiales',
+                        description: '20% de descuento en "Mi Tienda POZUELO" y heladerías POPS al presentar cédula.'
+                    },
+                    {
+                        title: 'Obsequio de Navidad',
+                        description: 'Regalo especial para hijos legalmente registrados menores de 12 años.'
+                    },
+                    {
+                        title: 'Beneficio por Nacimiento',
+                        description: 'Obsequio para el recién nacido, 3 días de permiso para el padre, y hora adicional de lactancia.',
+                        action: 'Solicitar beneficio por nacimiento',
+                        fileUpload: true
+                    }
+                ]
+            },
+            financiera: {
+                icon: 'fa-dollar-sign',
+                title: 'Dimensión Financiera',
+                color: '#2c5530',
+                items: [
+                    {
+                        title: 'Asociación Solidarista (ASDEPSA)',
+                        description: 'Programas de ahorro, crédito, convenios comerciales y médicos, y fondo de mutualidad.',
+                        link: 'https://asdepsa.com'
+                    },
+                    {
+                        title: 'Uniformes para Colaboradores',
+                        description: 'Dotación anual de uniformes adaptada a las necesidades específicas de cada rol.',
+                        link: 'https://uniformes.pozuelo.com'
+                    },
+                    {
+                        title: 'Beneficio Bono Escolar',
+                        description: 'Apoyo económico para hijos de colaboradores entre 4 y 18 años (colegio técnico).'
+                    },
+                    {
+                        title: 'Beneficio por Calamidad Doméstica',
+                        description: 'Adelanto de salario sin intereses en situaciones de emergencia, reembolsable en 52 semanas.',
+                        action: 'Solicitar beneficio por Calamidad Doméstica',
+                        fileUpload: true
+                    },
+                    {
+                        title: 'Restaurante Subvencionado',
+                        description: '95% de subsidio en costos de alimentación para acceso a comidas saludables y nutritivas.'
+                    }
+                ]
+            },
+            emocional: {
+                icon: 'fa-heart',
+                title: 'Dimensión Emocional',
+                color: '#8a1117',
+                items: [
+                    {
+                        title: 'Reconocimiento por Antigüedad - 5 años',
+                        description: 'Una semana adicional de días de valor y bienestar como reconocimiento.'
+                    },
+                    {
+                        title: 'Reconocimiento por Antigüedad - 10 años',
+                        description: 'Dos semanas adicionales de Días de Valor y Bienestar, más obsequio especial.'
+                    },
+                    {
+                        title: 'Reconocimiento por Antigüedad - 15 años',
+                        description: 'Obsequio especial de la compañía por compromiso a largo plazo.'
+                    },
+                    {
+                        title: 'Reconocimiento por Antigüedad - 20+ años',
+                        description: 'Reconocimientos especiales y una semana de permiso con goce de salario por cada hito.'
+                    },
+                    {
+                        title: 'Beneficio por Fallecimiento',
+                        description: '3 días adicionales de duelo, ayuda económica y donación de producto para familiares cercanos.',
+                        link: 'https://beneficios.pozuelo.com/fallecimiento'
+                    }
+                ]
+            },
+            mental: {
+                icon: 'fa-brain',
+                title: 'Dimensión Mental',
+                color: '#6b1a21',
+                items: [
+                    {
+                        title: 'Apoyo Financiero para la Educación',
+                        description: 'Auxilio de estudio para financiar formación académica acorde con el puesto o futuras posiciones.',
+                        requirements: [
+                            'Carrera acorde con requerimientos del puesto o futuras posiciones',
+                            'Solicitud de Beca debidamente llena con visto bueno del gerente',
+                            'Participar en entrevista con Jefe Inmediato y Analistas',
+                            'Evaluación de desempeño satisfactoria sin procesos disciplinarios'
+                        ],
+                        action: 'Enviar carta de solicitud',
+                        fileUpload: true
+                    }
+                ]
+            }
+        };
+
+        // DOM Elements
+        const dimensionsGrid = document.getElementById('dimensionsGrid');
+        const benefitsContainer = document.getElementById('benefitsContainer');
+        const benefitsHeader = document.getElementById('benefitsHeader');
+        const headerIcon = document.getElementById('headerIcon');
+        const headerTitle = document.getElementById('headerTitle');
+        const benefitsGrid = document.getElementById('benefitsGrid');
+
+        let activeDimension = 'fisica';
+
+        // Initialize the page
+        function init() {
+            renderBenefits(activeDimension);
+            setupEventListeners();
+        }
+
+        // Setup event listeners for dimension cards
+        function setupEventListeners() {
+            const dimensionCards = document.querySelectorAll('.dimension-card');
+            dimensionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const dimension = this.getAttribute('data-dimension');
+                    setActiveDimension(dimension);
+                });
+            });
+        }
+
+        // Set active dimension
+        function setActiveDimension(dimension) {
+            activeDimension = dimension;
+            
+            // Update dimension cards
+            document.querySelectorAll('.dimension-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`[data-dimension="${dimension}"]`).classList.add('active');
+            
+            // Update header
+            const dimensionData = dimensionsData[dimension];
+            headerIcon.className = `fas ${dimensionData.icon}`;
+            headerTitle.textContent = dimensionData.title;
+            
+            // Render benefits
+            renderBenefits(dimension);
+        }
+
+        // Render benefits for the selected dimension
+        function renderBenefits(dimension) {
+            const dimensionData = dimensionsData[dimension];
+            benefitsGrid.innerHTML = '';
+            
+            dimensionData.items.forEach(item => {
+                const benefitElement = createBenefitElement(item);
+                benefitsGrid.appendChild(benefitElement);
+            });
+        }
+
+        // Create a benefit element
+        function createBenefitElement(item) {
+            const benefitDiv = document.createElement('div');
+            benefitDiv.className = 'benefit-item';
+            
+            let html = `
+                <h4>${item.title}</h4>
+                <p>${item.description}</p>
+            `;
+            
+            if (item.details && item.details.length > 0) {
+                html += `
+                    <div class="benefit-details">
+                        <h5>Información útil:</h5>
+                        <ul>
+                `;
+                item.details.forEach(detail => {
+                    html += `<li>${detail}</li>`;
+                });
+                html += `
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (item.requirements && item.requirements.length > 0) {
+                html += `
+                    <div class="benefit-requirements">
+                        <h5>Requisitos:</h5>
+                        <ul>
+                `;
+                item.requirements.forEach(requirement => {
+                    html += `<li>${requirement}</li>`;
+                });
+                html += `
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (item.link || item.action) {
+                html += `<div class="benefit-actions">`;
+                
+                if (item.link) {
+                    html += `
+                        <a href="${item.link}" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-link"></i> Acceder
+                        </a>
+                    `;
+                }
+                
+                if (item.action) {
+                    html += `
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-file-alt"></i> ${item.action}
+                        </button>
+                    `;
+                }
+                
+                if (item.fileUpload) {
+                    html += `
+                        <label class="btn btn-gray">
+                            <i class="fas fa-upload"></i> Subir archivo
+                            <input type="file" style="display: none;">
+                        </label>
+                    `;
+                }
+                
+                html += `</div>`;
+            }
+            
+            benefitDiv.innerHTML = html;
+            return benefitDiv;
+        }
+
+        // Initialize the application when the page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
