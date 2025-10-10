@@ -3,754 +3,1167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programa Integral de Bienestar y Beneficios - POZUELO</title>
+    <title>Programa Integral de Bienestar - POZUELO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-red: #c91721;
-            --secondary-yellow: #f5e900;
-            --white: #ffffff;
-            --black: #000000;
-            --gray: #333333;
-            --light-gray: #f8f8f8;
-            --dark-red: #8a1117;
-            --green: #2c5530;
-            --dark-green: #1a331d;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            /* Corporate colors */
+            --primary-red: #c8171f;
+            --primary-yellow: #fed700;
+            --primary-white: #fffffc;
+            --primary-dark: #2b2b2b;
+            --primary-gray: #f5f5f5;
+            
+            /* Dimension colors using corporate palette */
+            --fisica: #c8171f;
+            --social: #fed700;
+            --financiera: #2b2b2b;
+            --emocional: #c8171f;
+            --mental: #fed700;
+            
+            --dark: #2B2D42;
+            --light: #F8F9FA;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--light-gray) 0%, #e0e0e0 100%);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
-            color: var(--gray);
-        }
-
-        .logo-container {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            z-index: 100;
-        }
-
-        .logo {
-            height: 60px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 50%, var(--secondary-yellow) 100%);
-            text-align: center;
-            padding: 2rem 1rem;
+            overflow-x: hidden;
             position: relative;
-            overflow: hidden;
-            margin-top: 80px;
+            color: var(--primary-dark);
         }
 
-        .header::before {
-            content: '';
+        /* Main background - Replace with your custom image */
+        .main-background {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 40%);
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/4-2%20limpia.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
         }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
-            color: var(--white);
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 15% 25%, rgba(200, 23, 31, 0.05) 1px, transparent 1px),
+                radial-gradient(circle at 85% 75%, rgba(254, 215, 0, 0.05) 1px, transparent 1px),
+                radial-gradient(circle at 45% 85%, rgba(43, 43, 43, 0.05) 1px, transparent 1px),
+                radial-gradient(circle at 65% 15%, rgba(200, 23, 31, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -1;
+            transition: opacity 0.8s ease;
         }
 
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+        /* Top Header Styles */
+        .top-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            transition: all 0.4s ease;
+            border-bottom: 3px solid var(--primary-red);
         }
 
-        .header p {
-            font-size: 1.25rem;
-            opacity: 0.9;
+        .top-header.immersive {
+            background: rgba(43, 43, 43, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 3px solid var(--primary-yellow);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+        .header-logo {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
         }
 
-        .section-title {
-            font-size: 2.25rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 2rem;
+        .header-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 800;
             color: var(--primary-red);
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .dimensions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+        .top-header.immersive .header-title {
+            color: var(--primary-yellow);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
-        .dimension-card {
-            background: white;
-            border: 2px solid var(--primary-red);
-            border-radius: 1rem;
-            padding: 1.5rem;
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 100px; /* Space for header */
+        }
+
+        .main-container.exiting {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        .immersive-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1001; /* Higher than header */
+        }
+
+        .immersive-container.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+
+        .dimension-image {
+            width: 60%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .immersive-container.active .dimension-image {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .dimension-bubble {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+            border: 4px solid var(--primary-white);
         }
 
-        .dimension-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(201, 23, 33, 0.2);
+        .immersive-container.active .dimension-bubble {
+            opacity: 1;
+            transform: scale(1);
         }
 
-        .dimension-card.active {
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
-            color: white;
+        .dimension-bubble i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            transition: transform 0.4s ease 0.6s;
+        }
+
+        .immersive-container.active .dimension-bubble i {
+            transform: rotate(360deg);
+        }
+
+        .dimension-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+            color: var(--primary-white);
+        }
+
+        .immersive-container.active .dimension-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dimension-description {
+            font-size: 18px;
+            max-width: 500px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
+            color: var(--primary-white);
+        }
+
+        .immersive-container.active .dimension-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: var(--primary-red);
             border: none;
-        }
-
-        .dimension-card.active:hover {
-            transform: scale(1.05);
-        }
-
-        .dimension-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .dimension-card h3 {
-            font-size: 1.125rem;
-            font-weight: bold;
-        }
-
-        .benefits-container {
-            background: linear-gradient(135deg, white 0%, #fafafa 100%);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 20px 40px rgba(201, 23, 33, 0.15);
-        }
-
-        .benefits-header {
+            color: var(--primary-white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
             display: flex;
             align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--light-gray);
-        }
-
-        .benefits-header i {
-            font-size: 2.25rem;
-            margin-right: 1rem;
-        }
-
-        .benefits-header h2 {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .benefit-item {
-            background: white;
-            border: 2px solid var(--primary-red);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            justify-content: center;
             transition: all 0.3s ease;
+            z-index: 1002;
+            box-shadow: 0 4px 15px rgba(200, 23, 31, 0.4);
         }
 
-        .benefit-item:hover {
-            box-shadow: 0 8px 25px rgba(201, 23, 33, 0.2);
-            transform: translateY(-2px);
+        .immersive-container.active .back-button {
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        .benefit-item h4 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: var(--primary-red);
+        .back-button:hover {
+            background: #a8131a;
+            transform: scale(1.1);
         }
 
-        .benefit-item p {
-            margin-bottom: 1rem;
-            line-height: 1.6;
-            color: var(--gray);
-        }
-
-        .benefit-details h5,
-        .benefit-requirements h5 {
-            font-weight: bold;
-            margin-bottom: 0.75rem;
-            color: var(--primary-red);
-        }
-
-        .benefit-details ul,
-        .benefit-requirements ul {
-            list-style-type: disc;
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--gray);
-        }
-
-        .benefit-actions {
+        .content-panel {
+            width: 40%;
+            height: 100%;
+            background: var(--primary-white);
+            overflow-y: auto;
+            box-shadow: -15px 0 50px rgba(0,0,0,0.25);
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
         }
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
+        .immersive-container.active .content-panel {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .panel-header {
+            padding: 30px;
+            color: var(--primary-white);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+        }
+
+        .immersive-container.active .panel-header {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .panel-content {
+            padding: 30px;
+            flex: 1;
+        }
+
+        /* Main Wheel Styles */
+        .wellness-wheel {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-container.exiting .wellness-wheel {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            z-index: 10;
+            padding: 20px;
+            text-align: center;
+            border: 4px solid var(--primary-white);
+        }
+
+        .wheel-center img {
+            width: 120px;
+            height: 120px;
+            margin-bottom: -15px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+            object-fit: contain;
+        }
+
+        .wheel-center h2 {
+            color: var(--primary-white);
+            font-size: 18px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.4;
+            transition: transform 0.4s ease;
+        }
+
+        .dimension-sectors {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .dimension-sector {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            color: var(--primary-white);
+            text-align: center;
+            padding: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 1.3;
+            border: 3px solid var(--primary-white);
+        }
+
+        .dimension-sector:hover {
+            transform: scale(1.15) translateY(-10px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+            z-index: 5;
+        }
+
+        .dimension-sector:active {
+            transform: scale(1.1) translateY(-5px);
+            transition: transform 0.1s ease;
+        }
+
+        .dimension-sector i {
+            font-size: 28px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .dimension-sector:hover i {
+            transform: scale(1.2);
+        }
+
+        .dimension-sector.fisica { 
+            background: linear-gradient(135deg, var(--fisica), #a8131a); 
+        }
+        .dimension-sector.social { 
+            background: linear-gradient(135deg, var(--social), #e6c200); 
+            color: var(--primary-dark);
+        }
+        .dimension-sector.financiera { 
+            background: linear-gradient(135deg, var(--financiera), #1a1a1a); 
+        }
+        .dimension-sector.emocional { 
+            background: linear-gradient(135deg, var(--emocional), #a8131a); 
+        }
+        .dimension-sector.mental { 
+            background: linear-gradient(135deg, var(--mental), #e6c200); 
+            color: var(--primary-dark);
+        }
+
+        /* Content Panel Styles */
+        .benefit-card {
+            background: var(--primary-white);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--fisica);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateX(30px);
+            border: 1px solid #e9ecef;
+        }
+
+        .benefit-card.appear {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .benefit-card:hover {
+            transform: translateX(0) translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .benefit-card.fisica { border-left-color: var(--fisica); }
+        .benefit-card.social { border-left-color: var(--social); color: var(--primary-dark); }
+        .benefit-card.financiera { border-left-color: var(--financiera); }
+        .benefit-card.emocional { border-left-color: var(--emocional); }
+        .benefit-card.mental { border-left-color: var(--mental); color: var(--primary-dark); }
+
+        .benefit-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .benefit-title i {
+            font-size: 22px;
+            color: var(--fisica);
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover .benefit-title i {
+            transform: scale(1.1);
+        }
+
+        .benefit-card.fisica .benefit-title i { color: var(--fisica); }
+        .benefit-card.social .benefit-title i { color: var(--social); }
+        .benefit-card.financiera .benefit-title i { color: var(--financiera); }
+        .benefit-card.emocional .benefit-title i { color: var(--emocional); }
+        .benefit-card.mental .benefit-title i { color: var(--mental); }
+
+        .benefit-description {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .schedule-section {
+            background: var(--primary-gray);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 3px solid var(--fisica);
             transition: all 0.3s ease;
-            text-decoration: none;
+        }
+
+        .schedule-section.fisica { border-left-color: var(--fisica); }
+        .schedule-section.social { border-left-color: var(--social); }
+        .schedule-section.financiera { border-left-color: var(--financiera); }
+        .schedule-section.emocional { border-left-color: var(--emocional); }
+        .schedule-section.mental { border-left-color: var(--mental); }
+
+        .schedule-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            font-size: 16px;
+        }
+
+        .schedule-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .schedule-item {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .action-button {
+            background: linear-gradient(135deg, var(--primary-red), #a8131a);
+            color: var(--primary-white);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 28px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(200, 23, 31, 0.3);
         }
 
-        .btn-primary {
-            background: var(--primary-red);
-            color: white;
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(200, 23, 31, 0.4);
+            background: linear-gradient(135deg, #a8131a, #8a0f15);
         }
 
-        .btn-primary:hover {
-            background: var(--dark-red);
+        .benefit-card.social .action-button {
+            background: linear-gradient(135deg, var(--social), #e6c200);
+            box-shadow: 0 4px 15px rgba(254, 215, 0, 0.3);
+            color: var(--primary-dark);
         }
 
-        .btn-secondary {
-            background: var(--secondary-yellow);
-            color: var(--black);
+        .benefit-card.social .action-button:hover {
+            background: linear-gradient(135deg, #e6c200, #ccaa00);
+            box-shadow: 0 8px 20px rgba(254, 215, 0, 0.4);
         }
 
-        .btn-secondary:hover {
-            background: #e6d500;
+        .benefit-card.financiera .action-button {
+            background: linear-gradient(135deg, var(--financiera), #1a1a1a);
+            box-shadow: 0 4px 15px rgba(43, 43, 43, 0.3);
         }
 
-        .btn-gray {
-            background: var(--gray);
-            color: white;
+        .benefit-card.financiera .action-button:hover {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            box-shadow: 0 8px 20px rgba(43, 43, 43, 0.4);
         }
 
-        .btn-gray:hover {
-            background: #222;
+        .benefit-card.emocional .action-button {
+            background: linear-gradient(135deg, var(--emocional), #a8131a);
+            box-shadow: 0 4px 15px rgba(200, 23, 31, 0.3);
         }
 
-        .contact-section {
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
-            border-radius: 1.5rem;
-            padding: 3rem;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(201, 23, 33, 0.3);
-            color: white;
+        .benefit-card.emocional .action-button:hover {
+            background: linear-gradient(135deg, #a8131a, #8a0f15);
+            box-shadow: 0 8px 20px rgba(200, 23, 31, 0.4);
         }
 
-        .contact-section h3 {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
+        .benefit-card.mental .action-button {
+            background: linear-gradient(135deg, var(--mental), #e6c200);
+            box-shadow: 0 4px 15px rgba(254, 215, 0, 0.3);
+            color: var(--primary-dark);
         }
 
-        .contact-section p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+        .benefit-card.mental .action-button:hover {
+            background: linear-gradient(135deg, #e6c200, #ccaa00);
+            box-shadow: 0 8px 20px rgba(254, 215, 0, 0.4);
         }
 
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.125rem;
-            font-weight: bold;
-        }
-
-        .contact-item i {
-            color: var(--secondary-yellow);
-            font-size: 1.5rem;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 2rem 0;
-            color: var(--gray);
-            font-size: 1.125rem;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .logo {
+            .top-header {
+                padding: 12px 20px;
+            }
+            
+            .header-logo {
+                width: 50px;
+                height: 50px;
+                margin-right: 15px;
+            }
+            
+            .header-title {
+                font-size: 20px;
+            }
+            
+            .main-container {
+                margin-top: 90px;
+            }
+            
+            .back-button {
+                top: 20px;
+                left: 20px;
+                width: 45px;
                 height: 45px;
+                font-size: 20px;
             }
             
-            .header {
-                margin-top: 60px;
+            .wellness-wheel {
+                width: 450px;
+                height: 450px;
             }
             
-            .header h1 {
-                font-size: 2rem;
+            .wheel-center {
+                width: 160px;
+                height: 160px;
             }
             
-            .header p {
-                font-size: 1rem;
+            .wheel-center img {
+                width: 90px;
+                height: 90px;
             }
             
-            .section-title {
-                font-size: 1.75rem;
+            .dimension-sector {
+                width: 90px;
+                height: 90px;
+                font-size: 12px;
+                padding: 10px;
             }
             
-            .benefits-header {
+            .immersive-container {
                 flex-direction: column;
-                text-align: center;
             }
             
-            .benefits-header i {
-                margin-right: 0;
-                margin-bottom: 1rem;
+            .dimension-image,
+            .content-panel {
+                width: 100%;
+                height: 50%;
             }
             
-            .contact-info {
-                flex-direction: column;
-                gap: 1rem;
+            .dimension-bubble {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .dimension-bubble i {
+                font-size: 32px;
+            }
+            
+            .dimension-title {
+                font-size: 22px;
+            }
+            
+            .dimension-description {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-header {
+                padding: 10px 15px;
+            }
+            
+            .header-logo {
+                width: 40px;
+                height: 40px;
+                margin-right: 10px;
+            }
+            
+            .header-title {
+                font-size: 16px;
+            }
+            
+            .main-container {
+                margin-top: 80px;
+            }
+            
+            .back-button {
+                top: 15px;
+                left: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .wellness-wheel {
+                width: 380px;
+                height: 380px;
+            }
+            
+            .wheel-center {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .wheel-center img {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .dimension-sector {
+                width: 75px;
+                height: 75px;
+                font-size: 10px;
+                padding: 8px;
+            }
+            
+            .dimension-bubble {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .dimension-bubble i {
+                font-size: 24px;
+            }
+            
+            .dimension-title {
+                font-size: 18px;
+            }
+            
+            .panel-content {
+                padding: 20px;
+            }
+            
+            .benefit-card {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Logo -->
-    <div class="logo-container">
-        <img src="https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/Logo%20Pozuelo.png" alt="Logo POZUELO" class="logo">
+    <!-- Main Background -->
+    <div class="main-background"></div>
+    
+    <!-- Top Header with Logo -->
+    <div class="top-header" id="topHeader">
+        <div class="header-logo">
+            <img src="https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/Logo%20Pozuelo.png" alt="Logo POZUELO">
+        </div>
+        <h1 class="header-title">PROGRAMA INTEGRAL DE BIENESTAR POZUELO</h1>
+    </div>
+    
+    <div class="background-pattern"></div>
+    
+    <!-- Main Wheel View -->
+    <div class="main-container" id="mainContainer">
+        <div class="wellness-wheel">
+            <div class="wheel-center">
+                <img src="https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/Vivo%20con%20sentido.png" alt="Programa Integral de Bienestar">
+                <h2>Programa Integral de Bienestar</h2>
+            </div>
+            <div class="dimension-sectors" id="dimensionSectors">
+                <!-- Sectors will be added by JavaScript -->
+            </div>
+        </div>
     </div>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <h1>Programa Integral de Bienestar y Beneficios</h1>
-            <p>Un programa diseñado para cuidar de nuestros colaboradores en todas las dimensiones</p>
-        </div>
-    </header>
-
-    <div class="container">
-        <!-- Dimension Navigation -->
-        <h2 class="section-title">Dimensiones del Bienestar</h2>
-        <div class="dimensions-grid" id="dimensionsGrid">
-            <div class="dimension-card active" data-dimension="fisica">
-                <i class="fas fa-heartbeat dimension-icon"></i>
-                <h3>Dimensión Física</h3>
-            </div>
-            <div class="dimension-card" data-dimension="social">
-                <i class="fas fa-users dimension-icon"></i>
-                <h3>Dimensión Social</h3>
-            </div>
-            <div class="dimension-card" data-dimension="financiera">
-                <i class="fas fa-dollar-sign dimension-icon"></i>
-                <h3>Dimensión Financiera</h3>
-            </div>
-            <div class="dimension-card" data-dimension="emocional">
-                <i class="fas fa-heart dimension-icon"></i>
-                <h3>Dimensión Emocional</h3>
-            </div>
-            <div class="dimension-card" data-dimension="mental">
-                <i class="fas fa-brain dimension-icon"></i>
-                <h3>Dimensión Mental</h3>
-            </div>
-        </div>
-
-        <!-- Benefits Content -->
-        <div class="benefits-container" id="benefitsContainer">
-            <div class="benefits-header" id="benefitsHeader">
-                <i class="fas fa-heartbeat" id="headerIcon"></i>
-                <h2 id="headerTitle">Dimensión Física</h2>
-            </div>
-            <div class="benefits-grid" id="benefitsGrid">
-                <!-- Benefits will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- Contact Information -->
-        <div class="contact-section">
-            <h3>¿Necesitas más información?</h3>
-            <p>Nuestro equipo de Recursos Humanos está disponible para ayudarte con cualquier consulta sobre estos beneficios.</p>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>+506 2222-3333</span>
+    <!-- Immersive View -->
+    <div class="immersive-container" id="immersiveContainer">
+        <div class="dimension-image" id="dimensionImage">
+            <div class="image-overlay">
+                <div class="dimension-bubble" id="dimensionBubble">
+                    <i class="fas fa-heartbeat" id="dimensionIcon"></i>
+                    <div class="dimension-title" id="immersiveTitle">Dimensión Física</div>
                 </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>beneficios@pozuelo.com</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-building"></i>
-                    <span>Unidad de Salud - Edificio Principal</span>
-                </div>
+                <p class="dimension-description" id="immersiveDescription">Beneficios para tu salud física y mental</p>
+            </div>
+            <button class="back-button" id="backButton">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <div class="content-panel">
+            <div class="panel-header" id="panelHeader">
+                <h2 id="panelTitle">Dimensión Física</h2>
+            </div>
+            <div class="panel-content" id="panelContent">
+                <!-- Content will be populated by JavaScript -->
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>© 2024 POZUELO - Todos los derechos reservados</p>
-        </footer>
     </div>
 
     <script>
-        // Data structure for dimensions and benefits
-        const dimensionsData = {
+        // Dimension data with customizable image paths
+        // REPLACE THE PLACEHOLDER URLs WITH YOUR ACTUAL GITHUB IMAGE URLs
+        const dimensions = {
             fisica: {
-                icon: 'fa-heartbeat',
-                title: 'Dimensión Física',
-                color: '#c91721',
-                items: [
+                title: "Dimensión Física",
+                description: "Beneficios para tu salud física y mental",
+                icon: "fas fa-heartbeat",
+                color: "fisica",
+                // Replace this URL with your actual GitHub image URL for Física dimension
+                image: "https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/15348461544566.jpg",
+                benefits: [
                     {
-                        title: 'Médico de Empresa',
-                        description: 'Atención médica directa en el lugar de trabajo para garantizar salud y bienestar.'
+                        title: "Beneficios para la Salud",
+                        description: "Los beneficios de salud son esenciales para garantizar que los colaboradores reciban atención médica oportuna y apoyo integral en salud física y mental, promoviendo un ambiente laboral saludable y productivo.",
+                        icon: "fas fa-stethoscope"
                     },
                     {
-                        title: 'Enfermería',
-                        description: 'Servicio disponible para emergencias menores y primeros auxilios.'
+                        title: "Médico de Empresa",
+                        description: "La unidad de salud ofrece un médico de empresa que brinda atención médica directa a los colaboradores, asegurando su salud y bienestar en el lugar de trabajo.",
+                        icon: "fas fa-user-md"
                     },
                     {
-                        title: 'Terapia Física',
-                        description: 'Tratamientos especializados para recuperación de lesiones y bienestar físico.'
+                        title: "Enfermería",
+                        description: "El servicio de enfermería está disponible para atender emergencias menores y proporcionar primeros auxilios a los colaboradores cuando sea necesario.",
+                        icon: "fas fa-syringe"
                     },
                     {
-                        title: 'Psicología',
-                        description: 'Apoyo emocional para manejar el estrés y situaciones que afectan el desempeño.'
+                        title: "Terapia Física",
+                        description: "La terapia física ayuda a los colaboradores a recuperarse de lesiones y mejorar su bienestar físico mediante tratamientos especializados.",
+                        icon: "fas fa-running"
                     },
                     {
-                        title: 'Nutrición',
-                        description: 'Servicio de nutrición para promover hábitos alimenticios saludables.'
+                        title: "Psicología",
+                        description: "El servicio de psicología ofrece apoyo emocional a los colaboradores, ayudándolos a manejar el estrés y otras situaciones que puedan afectar su desempeño laboral y su vida personal.",
+                        icon: "fas fa-brain"
                     },
                     {
-                        title: 'Servicio de Emergencias',
-                        description: 'Atención médica inmediata para situaciones críticas, garantizando seguridad.'
+                        title: "Nutrición",
+                        description: "Servicio de Nutrición profesional para mantener un estilo de vida saludable.",
+                        icon: "fas fa-apple-alt"
                     },
                     {
-                        title: 'Dermatología',
-                        description: 'Diagnóstico y tratamiento para enfermedades de la piel.'
+                        title: "Servicio de Emergencias",
+                        description: "El servicio de emergencias está disponible para atender situaciones críticas que requieran atención médica inmediata, garantizando la seguridad de los colaboradores en todo momento.",
+                        icon: "fas fa-ambulance"
                     },
                     {
-                        title: 'Hemograma Anual Gratuito',
-                        description: 'Conoce tu estado de salud para adoptar nuevos hábitos de bienestar.'
+                        title: "Dermatología",
+                        description: "El servicio de dermatología brinda diagnostico y tratamiento para las distintas enfermedades de la piel, ayudando al bienestar general de los colaboradores.",
+                        icon: "fas fa-allergies"
                     },
                     {
-                        title: 'Centro de Acondicionamiento Físico Vivo con Sentido (CAVS)',
-                        description: 'Gimnasio gratuito con acceso sin restricciones para fomentar un estilo de vida activo.',
-                        details: [
-                            'Solicita una cita en la Unidad de Salud para iniciar el uso del gimnasio',
-                            'Te harán un chequeo general para conocer tu estado de salud',
-                            'Es obligatorio realizarse el chequeo médico antes de usar el gimnasio',
-                            'Presentate en el gimnasio y solicita ayuda de un instructor para mediciones y rutina'
-                        ]
+                        title: "Hemograma anual gratuito",
+                        description: "Por medio del hemograma anual los colaboradores tienen forma de conocer su estado de salud para adoptar nuevos hábitos que le permitan vivir su bienestar.",
+                        icon: "fas fa-vial"
                     },
                     {
-                        title: 'Cobertura Integral de Póliza de Vida',
-                        description: 'Protección financiera con cobertura equivalente a 12 salarios base en caso de fallecimiento.'
+                        title: "Centro de Acondicionamiento Físico Vivo con Sentido (CAVS)",
+                        description: "El gimnasio gratuito garantiza a todos los colaboradores acceso sin restricciones, fomentando así un estilo de vida activo y saludable.",
+                        icon: "fas fa-dumbbell",
+                        schedule: {
+                            title: "Información útil para inscribirte en el CAVS:",
+                            items: [
+                                "Solicita una cita en la Unidad de Salud, indica que es para iniciar hacer uso del gimnasio.",
+                                "Te harán un chequeo general para conocer tu estado de salud, valorar si hay algún riesgo o brindar recomendaciones.",
+                                "Es obligatorio realizarse el chequeo médico antes de comenzar a usar el gimnasio.",
+                                "Presentate en el gimnasio y solicita la ayuda de algún instructor quien te guiará para tomar tus mediciones corporales y comenzar una rutina de ejercicio adecuada a tus objetivos."
+                            ]
+                        },
+                        action: "Subir Archivo"
+                    },
+                    {
+                        title: "Cobertura Integral de Póliza de Vida",
+                        description: "La póliza de vida ofrece una protección financiera crucial, brindando a los beneficiarios una cobertura equivalente a 12 salarios base en caso de fallecimiento del colaborador.",
+                        icon: "fas fa-file-contract"
                     }
                 ]
             },
             social: {
-                icon: 'fa-users',
-                title: 'Dimensión Social',
-                color: '#f5e900',
-                items: [
+                title: "Dimensión Social",
+                description: "Actividades y beneficios para fortalecer la comunidad",
+                icon: "fas fa-users",
+                color: "social",
+                // Replace this URL with your actual GitHub image URL for Social dimension
+                image: "https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/social.jpg",
+                benefits: [
                     {
-                        title: 'Día de la Familia',
-                        description: 'Celebración que reúne a colaboradores y sus familias, fortaleciendo lazos comunitarios.'
+                        title: "Día de la Familia",
+                        description: "El Día de la Familia es una celebración que reúne a colaboradores y sus familias, fortaleciendo los lazos comunitarios y promoviendo la convivencia entre todos los miembros de la empresa.",
+                        icon: "fas fa-home"
                     },
                     {
-                        title: 'Fiesta de Colaboradores',
-                        description: 'Evento anual que celebra el trabajo en equipo y reconoce logros del año.'
+                        title: "Fiesta de Colaboradores",
+                        description: "La Fiesta de Colaboradores es un evento anual que celebra el trabajo en equipo y reconoce los logros de los empleados a lo largo del año, fomentando el espíritu de camaradería.",
+                        icon: "fas fa-glass-cheers"
                     },
                     {
-                        title: 'Tesoros ¡Muuucha Galleta!',
-                        description: 'Espacio para celebrar y agradecer a colaboradores jubilados por su trayectoria.'
+                        title: "Tesoros ¡Muuucha Galleta!",
+                        description: "Tesoros ¡Muuucha Galleta! es un espacio donde celebramos y agradecemos aquellos colaboradores que con su trayectoria aportaron valor a nuestra compañía y se encuentran jubilados.",
+                        icon: "fas fa-cookie"
                     },
                     {
-                        title: 'Bienvenida de la Navidad',
-                        description: 'Celebración del inicio de la temporada navideña con espíritu navideño.'
+                        title: "Bienvenida de la Navidad",
+                        description: "La Bienvenida de la Navidad es una celebración que marca el inicio de la temporada navideña, donde se comparte el espíritu navideño entre todos los colaboradores.",
+                        icon: "fas fa-snowflake"
                     },
                     {
-                        title: 'Regalía de Producto',
-                        description: '1 Kg de galletas por semana para todos los colaboradores.',
-                        details: [
-                            'Lunes: 5:30am-6:30am / 9:00am-10:30am / 1:30pm-3:30pm',
-                            'Miércoles: 5:30am-6:30am / 9:00am-10:30am / 1:30pm-3:30pm',
-                            'Jueves: 5:30am-6:30am / 9:00am-10:30am / 1:30pm-3:30pm'
-                        ]
+                        title: "Regalía de Producto",
+                        description: "Cada colaborador tiene la oportunidad de disfrutar de 1 Kg de galletas por semana, garantizando que nuestros productos estén siempre en su hogar y contribuyendo al bienestar familiar.",
+                        icon: "fas fa-box-open",
+                        schedule: {
+                            title: "Horario de Entrega de Galletas",
+                            items: [
+                                "Lunes: 5:30am a 6:30am / 9:00am a 10:30am / 1:30pm a 3:30pm",
+                                "Miércoles: 5:30am a 6:30am / 9:00am a 10:30am / 1:30pm a 3:30pm", 
+                                "Jueves: 5:30am a 6:30am / 9:00am a 10:30am / 1:30pm a 3:30pm"
+                            ]
+                        }
                     },
                     {
-                        title: 'Opciones de Regalos por Cumpleaños',
-                        description: 'Elige entre una bolsa de productos variados o dos entradas al cine.'
+                        title: "Opciones de Regalos por Cumpleaños",
+                        description: "Los colaboradores tienen la opción de seleccionar entre dos regalos de cumpleaños: una bolsa de productos variados o dos entradas al cine para disfrutar de una película.",
+                        icon: "fas fa-gift"
                     },
                     {
-                        title: 'Beneficio por Matrimonio',
-                        description: '3 días de permiso con goce de salario y depósito en nómina para luna de miel.',
-                        action: 'Solicitar beneficio por matrimonio',
-                        fileUpload: true
+                        title: "Beneficio por matrimonio",
+                        description: "El beneficio por matrimonio otorga a los colaboradores 3 días de permiso con goce de salario y un depósito en nómina destinado a financiar la luna de miel.",
+                        icon: "fas fa-ring",
+                        action: "Subir Acta de Matrimonio"
                     },
                     {
-                        title: 'Descuentos Especiales',
-                        description: '20% de descuento en "Mi Tienda POZUELO" y heladerías POPS al presentar cédula.'
+                        title: "Descuentos especiales",
+                        description: "Todos los colaboradores cuentan con 20% de descuento en “Mi Tienda POZUELO” y heladerías POPS al presentar la cédula.",
+                        icon: "fas fa-percentage"
                     },
                     {
-                        title: 'Obsequio de Navidad',
-                        description: 'Regalo especial para hijos legalmente registrados menores de 12 años.'
+                        title: "Obsequio de Navidad",
+                        description: "La compañía se complace en ofrecer un regalo especial a los hijos legalmente registrados menores de 12 años de los colaboradores, promoviendo el espíritu navideño y la felicidad familiar.",
+                        icon: "fas fa-gift"
                     },
                     {
-                        title: 'Beneficio por Nacimiento',
-                        description: 'Obsequio para el recién nacido, 3 días de permiso para el padre, y hora adicional de lactancia.',
-                        action: 'Solicitar beneficio por nacimiento',
-                        fileUpload: true
+                        title: "Beneficio por Nacimiento",
+                        description: "El beneficio por nacimiento ofrece un obsequio especial para el recién nacido, promoviendo la celebración de esta nueva vida. Además, se otorgan 3 días de permiso con goce de salario para el padre.",
+                        icon: "fas fa-baby",
+                        action: "Subir Acta de Nacimiento"
                     }
                 ]
             },
             financiera: {
-                icon: 'fa-dollar-sign',
-                title: 'Dimensión Financiera',
-                color: '#2c5530',
-                items: [
+                title: "Dimensión Financiera",
+                description: "Apoyo económico y beneficios financieros",
+                icon: "fas fa-wallet",
+                color: "financiera",
+                // Replace this URL with your actual GitHub image URL for Financiera dimension
+                image: "https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/finanzas.jpg",
+                benefits: [
                     {
-                        title: 'Asociación Solidarista (ASDEPSA)',
-                        description: 'Programas de ahorro, crédito, convenios comerciales y médicos, y fondo de mutualidad.',
-                        link: 'https://asdepsa.com'
+                        title: "Asociación Solidarista (ASDEPSA)",
+                        description: "La Asociación Solidarista proporciona diversas iniciativas diseñadas para mejorar la calidad de vida de los colaboradores a través de programas de ahorro y crédito, así como convenios comerciales y médicos.",
+                        icon: "fas fa-hand-holding-usd",
+                        action: "Acceder a ASDEPSA"
                     },
                     {
-                        title: 'Uniformes para Colaboradores',
-                        description: 'Dotación anual de uniformes adaptada a las necesidades específicas de cada rol.',
-                        link: 'https://uniformes.pozuelo.com'
+                        title: "Uniformes para Colaboradores",
+                        description: "La compañía proporciona a cada colaborador una dotación anual de uniformes, adaptada a las necesidades específicas de su rol.",
+                        icon: "fas fa-tshirt",
+                        action: "App Entrega de Uniformes"
                     },
                     {
-                        title: 'Beneficio Bono Escolar',
-                        description: 'Apoyo económico para hijos de colaboradores entre 4 y 18 años (colegio técnico).'
+                        title: "Beneficio Bono Escolar",
+                        description: "Este bono proporciona apoyo económico a los hijos de colaboradores, específicamente para aquellos entre 4 y 17 años y 18 años si se está en colegio técnico.",
+                        icon: "fas fa-graduation-cap"
                     },
                     {
-                        title: 'Beneficio por Calamidad Doméstica',
-                        description: 'Adelanto de salario sin intereses en situaciones de emergencia, reembolsable en 52 semanas.',
-                        action: 'Solicitar beneficio por Calamidad Doméstica',
-                        fileUpload: true
+                        title: "Beneficio por Calamidad Doméstica",
+                        description: "El beneficio por calamidad doméstica permite a los colaboradores acceder a un adelanto de salario en situaciones de emergencia, proporcionándoles un soporte financiero crucial.",
+                        icon: "fas fa-exclamation-triangle",
+                        action: "Solicitar Beneficio"
                     },
                     {
-                        title: 'Restaurante Subvencionado',
-                        description: '95% de subsidio en costos de alimentación para acceso a comidas saludables y nutritivas.'
+                        title: "Restaurante Subvencionado",
+                        description: "POZUELO se compromete a mejorar la calidad de vida de sus colaboradores al subsidiar el 95% de los costos de alimentación, garantizando un acceso continuo a opciones de comidas saludables y nutritivas.",
+                        icon: "fas fa-utensils"
                     }
                 ]
             },
             emocional: {
-                icon: 'fa-heart',
-                title: 'Dimensión Emocional',
-                color: '#8a1117',
-                items: [
+                title: "Dimensión Emocional",
+                description: "Reconocimiento y apoyo emocional",
+                icon: "fas fa-heart",
+                color: "emocional",
+                // Replace this URL with your actual GitHub image URL for Emocional dimension
+                image: "https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/emocional.jpeg",
+                benefits: [
                     {
-                        title: 'Reconocimiento por Antigüedad - 5 años',
-                        description: 'Una semana adicional de días de valor y bienestar como reconocimiento.'
+                        title: "Reconocimiento por Antigüedad",
+                        description: "5 años: Una semana adicional de días de valor y bienestar.\n\n10 años: Dos semanas adicionales de Días de Valor y Bienestar, además de un obsequio especial.\n\n15 años: Obsequio de parte de la compañía.\n\n20+ años: Reconocimientos especiales junto con una semana de permiso con goce de salario.",
+                        icon: "fas fa-medal"
                     },
                     {
-                        title: 'Reconocimiento por Antigüedad - 10 años',
-                        description: 'Dos semanas adicionales de Días de Valor y Bienestar, más obsequio especial.'
-                    },
-                    {
-                        title: 'Reconocimiento por Antigüedad - 15 años',
-                        description: 'Obsequio especial de la compañía por compromiso a largo plazo.'
-                    },
-                    {
-                        title: 'Reconocimiento por Antigüedad - 20+ años',
-                        description: 'Reconocimientos especiales y una semana de permiso con goce de salario por cada hito.'
-                    },
-                    {
-                        title: 'Beneficio por Fallecimiento',
-                        description: '3 días adicionales de duelo, ayuda económica y donación de producto para familiares cercanos.',
-                        link: 'https://beneficios.pozuelo.com/fallecimiento'
+                        title: "Beneficio por fallecimiento",
+                        description: "Por ley se brindan días de licencia por duelo. En caso de fallecimiento de padres, cónyuge e hijos se ofrecen 3 días adicionales de beneficio por duelo, ayuda económica y donación de producto.",
+                        icon: "fas fa-dove",
+                        action: "Completar Formulario"
                     }
                 ]
             },
             mental: {
-                icon: 'fa-brain',
-                title: 'Dimensión Mental',
-                color: '#6b1a21',
-                items: [
+                title: "Dimensión Mental",
+                description: "Apoyo para el crecimiento personal y profesional",
+                icon: "fas fa-brain",
+                color: "mental",
+                // Replace this URL with your actual GitHub image URL for Mental dimension
+                image: "https://raw.githubusercontent.com/Walfarod1/Beneficios-Aaron/refs/heads/main/senales-paz-mental.jpg",
+                benefits: [
                     {
-                        title: 'Apoyo Financiero para la Educación',
-                        description: 'Auxilio de estudio para financiar formación académica acorde con el puesto o futuras posiciones.',
-                        requirements: [
-                            'Carrera acorde con requerimientos del puesto o futuras posiciones',
-                            'Solicitud de Beca debidamente llena con visto bueno del gerente',
-                            'Participar en entrevista con Jefe Inmediato y Analistas',
-                            'Evaluación de desempeño satisfactoria sin procesos disciplinarios'
-                        ],
-                        action: 'Enviar carta de solicitud',
-                        fileUpload: true
+                        title: "Apoyo Financiero para la Educación",
+                        description: "El auxilio de estudio está diseñado para ofrecer financiamiento a los colaboradores que buscan mejorar su formación académica, facilitando así su progreso y crecimiento profesional dentro de nuestra compañía.",
+                        icon: "fas fa-book-reader",
+                        info: "Requisitos:\n\n• La carrera debe ser acorde con los requerimientos del puesto\n• Presentar Solicitud de Beca con visto bueno del Gerente\n• Participar en entrevista con Jefe Inmediato y Analistas\n• Contar con evaluación del desempeño satisfactoria",
+                        action: "Enviar Solicitud"
                     }
                 ]
             }
         };
 
-        // DOM Elements
-        const dimensionsGrid = document.getElementById('dimensionsGrid');
-        const benefitsContainer = document.getElementById('benefitsContainer');
-        const benefitsHeader = document.getElementById('benefitsHeader');
-        const headerIcon = document.getElementById('headerIcon');
-        const headerTitle = document.getElementById('headerTitle');
-        const benefitsGrid = document.getElementById('benefitsGrid');
+        // Create dimension sectors in circle
+        const dimensionSectors = document.getElementById('dimensionSectors');
+        const dimensionKeys = Object.keys(dimensions);
+        const radius = 220;
+        const centerX = 300;
+        const centerY = 300;
 
-        let activeDimension = 'fisica';
-
-        // Initialize the page
-        function init() {
-            renderBenefits(activeDimension);
-            setupEventListeners();
-        }
-
-        // Setup event listeners for dimension cards
-        function setupEventListeners() {
-            const dimensionCards = document.querySelectorAll('.dimension-card');
-            dimensionCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const dimension = this.getAttribute('data-dimension');
-                    setActiveDimension(dimension);
-                });
-            });
-        }
-
-        // Set active dimension
-        function setActiveDimension(dimension) {
-            activeDimension = dimension;
+        dimensionKeys.forEach((key, index) => {
+            const angle = (index * (360 / dimensionKeys.length)) * Math.PI / 180;
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
             
-            // Update dimension cards
-            document.querySelectorAll('.dimension-card').forEach(card => {
-                card.classList.remove('active');
-            });
-            document.querySelector(`[data-dimension="${dimension}"]`).classList.add('active');
-            
-            // Update header
-            const dimensionData = dimensionsData[dimension];
-            headerIcon.className = `fas ${dimensionData.icon}`;
-            headerTitle.textContent = dimensionData.title;
-            
-            // Render benefits
-            renderBenefits(dimension);
-        }
-
-        // Render benefits for the selected dimension
-        function renderBenefits(dimension) {
-            const dimensionData = dimensionsData[dimension];
-            benefitsGrid.innerHTML = '';
-            
-            dimensionData.items.forEach(item => {
-                const benefitElement = createBenefitElement(item);
-                benefitsGrid.appendChild(benefitElement);
-            });
-        }
-
-        // Create a benefit element
-        function createBenefitElement(item) {
-            const benefitDiv = document.createElement('div');
-            benefitDiv.className = 'benefit-item';
-            
-            let html = `
-                <h4>${item.title}</h4>
-                <p>${item.description}</p>
+            const sector = document.createElement('div');
+            sector.className = `dimension-sector ${key}`;
+            sector.innerHTML = `
+                <i class="${dimensions[key].icon}"></i>
+                ${dimensions[key].title.split(' ')[1]}
             `;
+            sector.style.left = `${x - 60}px`;
+            sector.style.top = `${y - 60}px`;
             
-            if (item.details && item.details.length > 0) {
-                html += `
-                    <div class="benefit-details">
-                        <h5>Información útil:</h5>
-                        <ul>
-                `;
-                item.details.forEach(detail => {
-                    html += `<li>${detail}</li>`;
+            sector.addEventListener('click', () => {
+                openImmersiveView(key);
+            });
+            
+            dimensionSectors.appendChild(sector);
+        });
+
+        // Header and immersive view functionality
+        const topHeader = document.getElementById('topHeader');
+        const mainContainer = document.getElementById('mainContainer');
+        const immersiveContainer = document.getElementById('immersiveContainer');
+        const dimensionImage = document.getElementById('dimensionImage');
+        const dimensionBubble = document.getElementById('dimensionBubble');
+        const dimensionIcon = document.getElementById('dimensionIcon');
+        const immersiveTitle = document.getElementById('immersiveTitle');
+        const immersiveDescription = document.getElementById('immersiveDescription');
+        const panelHeader = document.getElementById('panelHeader');
+        const panelTitle = document.getElementById('panelTitle');
+        const panelContent = document.getElementById('panelContent');
+        const backButton = document.getElementById('backButton');
+
+        function openImmersiveView(dimensionKey) {
+            const dimension = dimensions[dimensionKey];
+            
+            // Add immersive class to header
+            topHeader.classList.add('immersive');
+            
+            // Add exit animation to main container
+            mainContainer.classList.add('exiting');
+            
+            // Wait for main container to finish exiting before showing immersive view
+            setTimeout(() => {
+                // Update immersive view content
+                dimensionImage.style.backgroundImage = `url(${dimension.image})`;
+                dimensionBubble.className = `dimension-bubble ${dimensionKey}`;
+                dimensionIcon.className = dimension.icon;
+                immersiveTitle.textContent = dimension.title;
+                immersiveDescription.textContent = dimension.description;
+                
+                // Update panel
+                panelHeader.className = `panel-header ${dimensionKey}`;
+                panelTitle.textContent = dimension.title;
+                
+                // Populate panel content
+                panelContent.innerHTML = '';
+                dimension.benefits.forEach((benefit, index) => {
+                    const card = document.createElement('div');
+                    card.className = `benefit-card ${dimensionKey}`;
+                    
+                    let cardHTML = `
+                        <div class="benefit-title">
+                            <i class="${benefit.icon}"></i>
+                            ${benefit.title}
+                        </div>
+                        <p class="benefit-description">${benefit.description.replace(/\n/g, '<br>')}</p>
+                    `;
+                    
+                    if (benefit.schedule) {
+                        cardHTML += `
+                            <div class="schedule-section ${dimensionKey}">
+                                <div class="schedule-title">${benefit.schedule.title}</div>
+                                <div class="schedule-items">
+                                    ${benefit.schedule.items.map(item => `<div class="schedule-item">• ${item}</div>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    if (benefit.info) {
+                        cardHTML += `
+                            <div class="schedule-section ${dimensionKey}">
+                                <div class="schedule-title">Información:</div>
+                                <div class="schedule-items">
+                                    ${benefit.info.replace(/\n/g, '<br>')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    if (benefit.action) {
+                        cardHTML += `<button class="action-button"><i class="fas fa-upload"></i> ${benefit.action}</button>`;
+                    }
+                    
+                    card.innerHTML = cardHTML;
+                    panelContent.appendChild(card);
+                    
+                    // Add staggered animation to cards
+                    setTimeout(() => {
+                        card.classList.add('appear');
+                    }, 100 + (index * 50));
                 });
-                html += `
-                        </ul>
-                    </div>
-                `;
-            }
-            
-            if (item.requirements && item.requirements.length > 0) {
-                html += `
-                    <div class="benefit-requirements">
-                        <h5>Requisitos:</h5>
-                        <ul>
-                `;
-                item.requirements.forEach(requirement => {
-                    html += `<li>${requirement}</li>`;
-                });
-                html += `
-                        </ul>
-                    </div>
-                `;
-            }
-            
-            if (item.link || item.action) {
-                html += `<div class="benefit-actions">`;
                 
-                if (item.link) {
-                    html += `
-                        <a href="${item.link}" target="_blank" class="btn btn-primary">
-                            <i class="fas fa-link"></i> Acceder
-                        </a>
-                    `;
-                }
+                // Show immersive view
+                immersiveContainer.classList.add('active');
                 
-                if (item.action) {
-                    html += `
-                        <button class="btn btn-secondary">
-                            <i class="fas fa-file-alt"></i> ${item.action}
-                        </button>
-                    `;
-                }
-                
-                if (item.fileUpload) {
-                    html += `
-                        <label class="btn btn-gray">
-                            <i class="fas fa-upload"></i> Subir archivo
-                            <input type="file" style="display: none;">
-                        </label>
-                    `;
-                }
-                
-                html += `</div>`;
-            }
-            
-            benefitDiv.innerHTML = html;
-            return benefitDiv;
+                // Reset main container for next use
+                setTimeout(() => {
+                    mainContainer.style.display = 'none';
+                    mainContainer.classList.remove('exiting');
+                }, 500);
+            }, 500);
         }
 
-        // Initialize the application when the page loads
-        document.addEventListener('DOMContentLoaded', init);
+        backButton.addEventListener('click', () => {
+            // Remove immersive class from header
+            topHeader.classList.remove('immersive');
+            
+            // Hide immersive view
+            immersiveContainer.classList.remove('active');
+            
+            // Wait for immersive view to hide before showing main container
+            setTimeout(() => {
+                mainContainer.style.display = 'flex';
+            }, 500);
+        });
     </script>
 </body>
 </html>
